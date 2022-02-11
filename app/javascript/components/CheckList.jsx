@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Box, Checkbox, Text, VStack, Input, Button, HStack } from '@chakra-ui/react';
 
+import CheckListHeader from './CheckListHeader'
+
 const Checklist = () => {
   const [tasks, setTasks] = useState([
     { id: 1, text: 'Task 1', completed: false },
@@ -30,7 +32,7 @@ const Checklist = () => {
 
   return (
     <Box w="full" p={4} className="max-w-screen-xl mx-auto">
-      <Text fontSize="3xl" fontWeight="bold" mb={4}>Check List</Text>
+      <CheckListHeader />
       <Text mb={4}>Check List Description</Text>
       <VStack spacing={2} w="full">
         {tasks.map(task => (
