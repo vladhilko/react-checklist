@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Checkbox, Text, Input, HStack, useOutsideClick, Spinner } from '@chakra-ui/react';
 
 const CheckListItem = ({ item, onToggle, onUpdate }) => {
@@ -49,7 +49,7 @@ const CheckListItem = ({ item, onToggle, onUpdate }) => {
             ref={inputRef}
             value={editText}
             onChange={handleInputChange}
-            onKeyPress={handleInputSubmit}
+            onKeyDown ={handleInputSubmit}
             onBlur={() => setIsEditable(false)}
             size="md"
             autoFocus
