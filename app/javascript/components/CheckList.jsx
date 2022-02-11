@@ -62,10 +62,29 @@ const Checklist = () => {
   };
 
   const onDragEnd = async (result) => {
-    // Implement drag end logic here if needed
-    // For now, we'll just log the result
-    console.log(result);
-    // You might need a server-side endpoint to handle reordering if you want it persisted
+    if (!result.destination) return;
+
+    const { source, destination } = result;
+
+    // Assuming the items are being reordered in the same list
+    if (source.index !== destination.index) {
+      // Create a new reordered array
+      const newItems = Array.from(checkListItems);
+      const [reorderedItem] = newItems.splice(source.index, 1);
+      newItems.splice(destination.index, 0, reorderedItem);
+
+      // Update state immediately for a responsive UI
+      setCheckListItems(newItems);
+
+      // Send the new order to the backend
+      try {
+        await axios.post('http://localhost:3000/check_list_items/reorder', {
+          order: newItems.map(item => item.id)
+        });
+      } catch (error) {
+        console.error("Error updating item order:", error);
+      }
+    }
   };
 
   const [newCheckListItemText, setNewCheckListItemText] = useState('');

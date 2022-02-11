@@ -4,7 +4,7 @@ class CheckListItemsController < ApplicationController
 
   # GET /check_list_items
   def index
-    render json: @check_list.check_list_items.order(:created_at)
+    render json: @check_list.check_list_items.order(:position)
   end
 
   # POST /check_list_items
@@ -42,6 +42,13 @@ class CheckListItemsController < ApplicationController
 
   def fetch_check_list
     render json: @check_list
+  end
+
+  def reorder
+    params[:order].each_with_index do |id, index|
+      CheckListItem.where(id: id).update_all(position: index)
+    end
+    head :ok
   end
 
   private
