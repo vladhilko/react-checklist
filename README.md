@@ -1,4 +1,4 @@
-# Tutorial Example for RoR API, React, ChakraUI and Tailwind CSS
+# Application example for RoR API, React, Chakra UI, and Tailwind CSS.
 
 ---
 
