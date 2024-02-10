@@ -1,11 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Text, Input, useOutsideClick, Box } from '@chakra-ui/react';
+import axios from 'axios';
 
 const CheckListHeader = () => {
-  const [headerText, setHeaderText] = useState('Check List Header');
+  const [headerText, setHeaderText] = useState('');
   const [isEditable, setIsEditable] = useState(false);
-  const [editText, setEditText] = useState(headerText);
+  const [editText, setEditText] = useState('');
   const inputRef = React.useRef();
+
+  useEffect(() => {
+    const fetchCheckListTitle = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/check_list');
+        const { title } = response.data; // Assuming the response has a title field
+        setHeaderText(title);
+        setEditText(title); // Also set editText to the fetched title
+      } catch (error) {
+        console.error("Error fetching CheckList title:", error);
+      }
+    };
+
+    fetchCheckListTitle();
+  }, []);
 
   useOutsideClick({
     ref: inputRef,
@@ -20,10 +36,17 @@ const CheckListHeader = () => {
     setEditText(e.target.value);
   };
 
-  const handleInputSubmit = (e) => {
+  const handleInputSubmit = async (e) => {
     if (e.key === 'Enter') {
-      setHeaderText(editText);
-      setIsEditable(false);
+      try {
+        await axios.patch('http://localhost:3000/check_list', {
+          check_list: { title: editText }
+        });
+        setHeaderText(editText);
+        setIsEditable(false);
+      } catch (error) {
+        console.error("Error updating title:", error);
+      }
     }
   };
 
@@ -50,7 +73,7 @@ const CheckListHeader = () => {
           onClick={handleTextClick}
           cursor="pointer"
         >
-          {headerText}
+          {headerText || "Loading title..."}
         </Text>
       )}
     </Box>

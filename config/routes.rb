@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   resources :check_list_items, only: [:index, :create, :update, :destroy]
   # Defines the root path route ("/")
   # root "posts#index"
+  patch '/check_list', to: 'check_list_items#update_check_list'
+  get '/check_list', to: 'check_list_items#fetch_check_list'
 end
