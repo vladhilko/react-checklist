@@ -10,4 +10,7 @@ Rails.application.routes.draw do
   # root "posts#index"
   patch '/check_list', to: 'check_list_items#update_check_list'
   get '/check_list', to: 'check_list_items#fetch_check_list'
+  resources :check_list_items do
+    post :reorder, on: :collection
+  end
 end
