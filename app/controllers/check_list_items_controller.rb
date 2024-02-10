@@ -4,7 +4,7 @@ class CheckListItemsController < ApplicationController
 
   # GET /check_list_items
   def index
-    render json: @check_list.check_list_items.order(:position)
+    render json: @check_list.check_list_items.order(:position, :created_at)
   end
 
   # POST /check_list_items

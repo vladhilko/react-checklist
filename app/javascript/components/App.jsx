@@ -16,7 +16,7 @@ const App = () => {
   return (
     <>
       <ChakraProvider>
-        <CheckList/>
+        <CheckList />
       </ChakraProvider>
     </>
   );
